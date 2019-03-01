@@ -19,6 +19,11 @@ step = (independent_array[1]-independent_array[0])
 
 #do fast fourier transform
 D_array = fftshift(fft(fftshift(dependent_array)))
+#####make power spectrum
+power = np.real(D_array)**2 + np.imag(D_array)**2
+
+####CONSTRUCT PHASE SPECTRUM HERE(TODO)
+
 ####get freq domain
 fftx = fftshift(fftfreq(len(dependent_array),step))
 
@@ -43,15 +48,19 @@ plt.gcf().savefig("raw_signal.png")
 
 #plot power spectrum
 plt.figure(figsize=(16,9),dpi=200)
-plt.plot(fftx,abs(D_array)**2,'k-',zorder=1)
+plt.plot(fftx,power,'k-',zorder=1)
 plt.title("Power Spectrum")
 plt.xlabel("Spectral Power")
 plt.ylabel("Frequency")
+
+#TRY TO PLOT THE PHASE SPECTRUM ON A SECOND PLOT ON THIS SAME FIGURE (TODO)
+
 plt.gcf().savefig("raw_spectrum.png")
 
 #plot spectrogram (note this function just calls the scipy module used above internally)
 plt.figure(figsize=(16,9),dpi=200)
 plt.specgram(dependent_array,Fs=step)
+plt.colorbar()
 plt.title("Spectrogram")
 plt.gcf().savefig("spectrogram.png")
 
@@ -61,6 +70,8 @@ plt.hist(dependent_array, normed=True, bins=50)
 plt.plot(dpdf,epdf.pdf(dpdf),color="black")
 plt.annotate("mean = %.1f\nstd = %.1f\nskewness = %.1f"%(epdf.mean(),epdf.std(),epdf.moment(3)),xy=(0.82,0.85),xycoords="axes fraction",bbox=dict(boxstyle="round", fc="w"))
 plt.gcf().savefig("signal_pdf.png")
+
+#TRY TO MAKE A PERIODOGRAM USING SCIPY.SIGNAL (TODO)
 
 #display figures
 plt.show()

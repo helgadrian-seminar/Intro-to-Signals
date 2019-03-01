@@ -10,12 +10,12 @@ d = np.arange(0,size)
 s1p = 100
 np.random.seed(666)
 
-#Generate Source Signature or Signatures
+#Generate Source Signature/s
 source1 = np.sin(2*np.pi*(d/s1p))
 source2 = np.random.uniform(0,1,size=size)
 source3 = np.exp((-d%200)/50)/(np.e**4)
 
-#Combine Sources or filter source signal
+#Combine sources or apply filter/s to source signal
 data = sgn.convolve(sgn.convolve(source1,source2),source3)
 data = data/max(data)
 
