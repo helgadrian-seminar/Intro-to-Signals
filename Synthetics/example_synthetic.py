@@ -17,7 +17,13 @@ source3 = np.exp((-d%200)/50)/(np.e**4)
 
 #Combine sources or apply filter/s to source signal
 data = sgn.convolve(sgn.convolve(source1,source2),source3)
-data = data/max(data)
+data = data/max(abs(data))
+
+import scipy.stats as stats
+#fit a pdf to the data
+epdf = stats.norm(*stats.norm.fit(data))
+####get pdf domain
+dpdf = np.linspace(epdf.ppf(.01),epdf.ppf(.99),100)
 
 #Visualize
 plt.figure(figsize=(16,9),dpi=200)
@@ -40,6 +46,8 @@ plt.subplot(223)
 plt.hist(source3, normed=True, bins=100)
 plt.subplot(224)
 plt.hist(data, normed=True, bins=100)
+plt.plot(dpdf,epdf.pdf(dpdf),color="black")
+plt.annotate("mean = %.4f\nstd = %.4f\nskewness = %.4f"%(epdf.mean(),epdf.std(),epdf.moment(3)),xy=(0.97,0.95),xycoords="axes fraction",bbox=dict(boxstyle="round", fc="w"),ha='right',va='top')
 plt.gcf().savefig("central_limit_pdfs.png")
 
 plt.show()
