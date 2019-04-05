@@ -17,8 +17,25 @@ def create_magsynth():
     """
     pass #put outline of code here
 
+def create_magsource():
+    """
+    Make magnetic source
+    """
+    pass
 
+def apply_earthfilter():
+    """
+    Make earth filter
+    """
+    pass
+
+def read_gradstien(file_path):
+    """
+    Read Gradstien et al. 2012 timescale from data file
+    """
+    pass
 
 if __name__=="__main__":
-    pass #script stuff
+    if "-h" in sys.argv:
+        help(__name__)
 
